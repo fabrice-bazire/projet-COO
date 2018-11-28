@@ -1,4 +1,4 @@
-
+package sample;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -11,16 +11,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
+import java.lang.String;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 public class Main extends Application {
 
-    Image mur = new Image(new FileInputStream("src/sample/mur sokoban.jpg"),80,80,false,false);
-    Image ext = new Image(new FileInputStream("src/sample/exterieur sokoban.jpg"), 80, 80, false, false);
-    Image inside = new Image(new FileInputStream("src/sample/interieur sokoban.jpg"), 80, 80, false, false);
+    Image mur = new Image(new FileInputStream("src/sample/mur sokoban.jpg"),50,50,false,false);
+    Image ext = new Image(new FileInputStream("src/sample/exterieur sokoban.jpg"), 50, 50, false, false);
+    Image inside = new Image(new FileInputStream("src/sample/interieur sokoban.jpg"), 50, 50, false, false);
+    Image flechegauche = new Image(new FileInputStream("src/sample/fleche gauche.jpg"), 20, 20, false, false);
+    Image flechedroite = new Image(new FileInputStream("src/sample/fleche droite.jpg"), 20, 20, false, false);
 
     Image[] image = {mur,ext,inside};
 
@@ -47,47 +49,53 @@ public class Main extends Application {
         hbBtn2.getChildren().add(btn2);
         grid.add(hbBtn2, 8, 8);
 
-        Image imagegauche = new Image(new FileInputStream("src/sample/fleche gauche.jpg"),30,30,false,false);
-        ImageView imageViewgauche = new ImageView(imagegauche);
-        Button btn3 = new Button("");
-        btn3.setGraphic(imageViewgauche);
-        HBox hbBtn3 = new HBox(10);
-        hbBtn3.setAlignment(Pos.BOTTOM_LEFT);
-        hbBtn3.getChildren().add(btn3);
-        grid.add(hbBtn3, 1, 11);
-
-        Image imagedroite = new Image(new FileInputStream("src/sample/fleche droite.jpg"),30,30,false,false);
-        ImageView imageViewdroite = new ImageView(imagedroite);
-        Button btn4 = new Button("");
-        btn3.setGraphic(imageViewdroite);
-        HBox hbBtn4 = new HBox(10);
-        hbBtn4.setAlignment(Pos.BOTTOM_LEFT);
-        hbBtn4.getChildren().add(btn4);
-        grid.add(hbBtn4, 2, 10);
-
-        Image imagehaut = new Image(new FileInputStream("src/sample/fleche haut.jpg"),30,30,false,false);
-        ImageView imageViewhaut = new ImageView(imagehaut);
-        Button btn5 = new Button("");
-        btn3.setGraphic(imageViewhaut);
-        HBox hbBtn5 = new HBox(10);
-        hbBtn5.setAlignment(Pos.BOTTOM_LEFT);
-        hbBtn5.getChildren().add(btn5);
-        grid.add(hbBtn5, 1, 9);
-
-        Image imagebas = new Image(new FileInputStream("src/sample/fleche bas.jpg"),30,30,false,false);
-        ImageView imageViewbas = new ImageView(imagebas);
-        Button btn6 = new Button("");
-        btn3.setGraphic(imageViewbas);
-        HBox hbBtn6 = new HBox(10);
-        hbBtn6.setAlignment(Pos.BOTTOM_LEFT);
-        hbBtn6.getChildren().add(btn6);
-        grid.add(hbBtn6, 0, 10);
-
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event2) {
                 primaryStage.close();
             }
         });
+
+
+        Button btn3 = new Button("<-");
+        grid.add(btn3, 0, 10);
+
+        btn3.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event3) {
+                System.out.println("gauche");
+            }
+        });
+
+
+        Button btn4 = new Button("->");
+        grid.add(btn4, 2, 10);
+
+        btn4.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event4) {
+                System.out.println("droite");
+            }
+        });
+
+
+        Button btn5 = new Button("^\n|");
+        grid.add(btn5, 1, 9);
+
+        btn5.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event4) {
+                System.out.println("haut");
+            }
+        });
+
+
+        Button btn6 = new Button(" |\n\\/");
+        grid.add(btn6, 1, 11);
+
+        btn6.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event4) {
+                System.out.println("bas");
+            }
+        });
+
+
 
         primaryStage.setScene(new Scene(grid, 960, 700));
         primaryStage.setTitle("Sokoban");
