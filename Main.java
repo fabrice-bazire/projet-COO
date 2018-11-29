@@ -22,9 +22,11 @@ public class Main extends Application {
     Image ext = new Image(new FileInputStream("src/sample/exterieur sokoban.jpg"), 50, 50, false, false);
     Image inside = new Image(new FileInputStream("src/sample/interieur sokoban.jpg"), 50, 50, false, false);
     Image perso = new Image(new FileInputStream("src/sample/fab.jpg"), 50, 50, false, false);
-    Image caisse = new Image(new FileInputStream("src/sample/caisse not ok sokoban.jpg"), 50, 50, false, false);
+    Image caisse_not_ok = new Image(new FileInputStream("src/sample/caisse not ok sokoban.jpg"), 50, 50, false, false);
+    Image caisse_ok = new Image(new FileInputStream("src/sample/caisse ok sokoban.jpg"), 50, 50, false, false);
+    Image emplacement_caisse = new Image(new FileInputStream("src/sample/emplacement caisse.jpg"), 50, 50, false, false);
 
-    Image[] image = {mur,ext,inside, perso, caisse};
+    Image[] image = {mur,ext,inside, perso, caisse_not_ok, caisse_ok, emplacement_caisse};
 
     public Main() throws FileNotFoundException {
     }
@@ -36,6 +38,7 @@ public class Main extends Application {
         int[][] etat = {{1,1,1,1,1,1,1,1,1,1},{1,0,0,0,0,0,0,0,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,0,0,0,0,0,0,0,1},{1,1,1,1,1,1,1,1,1,1}};
         etat [position_perso[0]] [position_perso[1]] = 3;
         etat [5][5] = 4;
+        etat [2][7] = 6;
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -65,11 +68,16 @@ public class Main extends Application {
         btn3.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event3) {
                 System.out.println("gauche");
-                if (((etat[position_perso[0]-2] [position_perso[1]] == 2) && (etat[position_perso[0]-1] [position_perso[1]] == 4)) || (etat[position_perso[0]-1] [position_perso[1]] == 2)){
+                if (((etat[position_perso[0]-2] [position_perso[1]] == 2 || etat[position_perso[0]-2] [position_perso[1]] == 6) && (etat[position_perso[0]-1] [position_perso[1]] == 4)) || (etat[position_perso[0]-1] [position_perso[1]] == 2)){
                     position_perso[0]--;
                     if (etat[position_perso[0]][position_perso[1]] == 4) {
-                        etat[position_perso[0] - 1][position_perso[1]] = 4;
-                        grid.add(new ImageView(image[4]), position_perso[0] - 1, position_perso[1]);
+                        if (etat[position_perso[0]-1][position_perso[1]] == 6){
+                            etat[position_perso[0]-1][position_perso[1]] = 5;
+                            grid.add(new ImageView(image[5]), position_perso[0]-1, position_perso[1]);
+                        }else{
+                            etat[position_perso[0]-1][position_perso[1]] = 4;
+                            grid.add(new ImageView(image[4]), position_perso[0]-1, position_perso[1]);
+                        }
                     }
                     etat[position_perso[0]][position_perso[1]] = 3;
                     etat[position_perso[0] + 1][position_perso[1]] = 2;
@@ -86,11 +94,16 @@ public class Main extends Application {
         btn4.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event4) {
                 System.out.println("droite");
-                if (((etat[position_perso[0]+2] [position_perso[1]] == 2) && (etat[position_perso[0]+1] [position_perso[1]] == 4)) || (etat[position_perso[0]+1] [position_perso[1]] == 2)) {
+                if (((etat[position_perso[0]+2] [position_perso[1]] == 2 || etat[position_perso[0]+2] [position_perso[1]] == 6) && (etat[position_perso[0]+1] [position_perso[1]] == 4)) || (etat[position_perso[0]+1] [position_perso[1]] == 2)) {
                     position_perso[0]++;
                     if (etat[position_perso[0]][position_perso[1]] == 4) {
-                        etat[position_perso[0] + 1][position_perso[1]] = 4;
-                        grid.add(new ImageView(image[4]), position_perso[0] + 1, position_perso[1]);
+                        if (etat[position_perso[0]+1][position_perso[1]] == 6){
+                            etat[position_perso[0]+1][position_perso[1]] = 5;
+                            grid.add(new ImageView(image[5]), position_perso[0]+1, position_perso[1]);
+                        }else{
+                            etat[position_perso[0]+1][position_perso[1]] = 4;
+                            grid.add(new ImageView(image[4]), position_perso[0]+1, position_perso[1]);
+                        }
                     }
                     etat[position_perso[0]][position_perso[1]] = 3;
                     etat[position_perso[0] - 1][position_perso[1]] = 2;
@@ -107,11 +120,16 @@ public class Main extends Application {
         btn5.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event4) {
                 System.out.println("haut");
-                if (((etat[position_perso[0]] [position_perso[1]-2] == 2) && (etat[position_perso[0]] [position_perso[1]-1] == 4)) || (etat[position_perso[0]] [position_perso[1]-1] == 2)) {
+                if (((etat[position_perso[0]] [position_perso[1]-2] == 2 || etat[position_perso[0]] [position_perso[1]-2] == 6) && (etat[position_perso[0]] [position_perso[1]-1] == 4)) || (etat[position_perso[0]] [position_perso[1]-1] == 2)) {
                     position_perso[1]--;
                     if (etat[position_perso[0]][position_perso[1]] == 4) {
-                        etat[position_perso[0]][position_perso[1] - 1] = 4;
-                        grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] - 1);
+                        if (etat[position_perso[0]][position_perso[1]-1] == 6){
+                            etat[position_perso[0]][position_perso[1] - 1] = 5;
+                            grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] - 1);
+                        }else{
+                            etat[position_perso[0]][position_perso[1] - 1] = 4;
+                            grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] - 1);
+                        }
                     }
                     etat[position_perso[0]][position_perso[1]] = 3;
                     etat[position_perso[0]][position_perso[1] + 1] = 2;
@@ -129,11 +147,16 @@ public class Main extends Application {
         btn6.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event4) {
                 System.out.println("bas");
-                if (((etat[position_perso[0]] [position_perso[1]+2] == 2) && (etat[position_perso[0]] [position_perso[1]+1] == 4)) || (etat[position_perso[0]] [position_perso[1]+1] == 2)) {
+                if (((etat[position_perso[0]] [position_perso[1]+2] == 2 || etat[position_perso[0]] [position_perso[1]+2] == 6) && (etat[position_perso[0]] [position_perso[1]+1] == 4)) || (etat[position_perso[0]] [position_perso[1]+1] == 2)) {
                     position_perso[1]++;
                     if (etat[position_perso[0]][position_perso[1]] == 4) {
-                        etat[position_perso[0]][position_perso[1] + 1] = 4;
-                        grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] + 1);
+                        if (etat[position_perso[0]][position_perso[1]+1] == 6){
+                            etat[position_perso[0]][position_perso[1] + 1] = 5;
+                            grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] + 1);
+                        }else{
+                            etat[position_perso[0]][position_perso[1] + 1] = 4;
+                            grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] + 1);
+                        }
                     }
                     etat[position_perso[0]][position_perso[1]] = 3;
                     etat[position_perso[0]][position_perso[1] - 1] = 2;
