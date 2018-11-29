@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
 import java.lang.String;
+import javafx.scene.text.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -50,10 +51,7 @@ public class Main extends Application {
 		}
 
         Button btn2 = new Button("Exit");
-        HBox hbBtn2 = new HBox(10);
-        hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn2.getChildren().add(btn2);
-        grid.add(hbBtn2, 8, 13);
+        grid.add(btn2, 8, 13);
 
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event2) {
@@ -74,6 +72,9 @@ public class Main extends Application {
                         if (etat[position_perso[0]-1][position_perso[1]] == 6){
                             etat[position_perso[0]-1][position_perso[1]] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0]-1, position_perso[1]);
+                            Text scenetitle = new Text("Vous avez gagné !!!");
+                            scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+                            grid.add(scenetitle, 16, 11);
                         }else{
                             etat[position_perso[0]-1][position_perso[1]] = 4;
                             grid.add(new ImageView(image[4]), position_perso[0]-1, position_perso[1]);
@@ -100,6 +101,9 @@ public class Main extends Application {
                         if (etat[position_perso[0]+1][position_perso[1]] == 6){
                             etat[position_perso[0]+1][position_perso[1]] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0]+1, position_perso[1]);
+                            Text scenetitle = new Text("Vous avez gagné !!!");
+                            scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+                            grid.add(scenetitle, 16, 11);
                         }else{
                             etat[position_perso[0]+1][position_perso[1]] = 4;
                             grid.add(new ImageView(image[4]), position_perso[0]+1, position_perso[1]);
@@ -126,6 +130,9 @@ public class Main extends Application {
                         if (etat[position_perso[0]][position_perso[1]-1] == 6){
                             etat[position_perso[0]][position_perso[1] - 1] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] - 1);
+                            Text scenetitle = new Text("Vous avez gagné !!!");
+                            scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+                            grid.add(scenetitle, 16, 11);
                         }else{
                             etat[position_perso[0]][position_perso[1] - 1] = 4;
                             grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] - 1);
@@ -153,6 +160,9 @@ public class Main extends Application {
                         if (etat[position_perso[0]][position_perso[1]+1] == 6){
                             etat[position_perso[0]][position_perso[1] + 1] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] + 1);
+                            Text scenetitle = new Text("Vous avez gagné !!!");
+                            scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+                            grid.add(scenetitle, 16, 11);
                         }else{
                             etat[position_perso[0]][position_perso[1] + 1] = 4;
                             grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] + 1);
