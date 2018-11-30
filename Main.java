@@ -29,7 +29,7 @@ public class Main extends Application {
 
     Image[] image = {mur,ext,inside, perso, caisse_not_ok, caisse_ok, emplacement_caisse};
 
-    int nbcibles = 3;
+    int nbcibles = 2;
 
     public Main() throws FileNotFoundException {
     }
@@ -40,13 +40,13 @@ public class Main extends Application {
         int[] position_perso = {2,7};
         int[][] etat = { {0,0,0,0,0,1,1,1,1,1},{0,2,2,2,0,0,0,0,0,0},{0,2,2,2,0,2,2,2,2,0},{0,2,2,2,2,2,2,2,2,0},{0,0,0,0,0,2,2,2,2,0},{1,1,1,1,0,2,0,0,0,0},{1,1,0,0,0,2,2,2,0,1},{1,1,0,2,2,2,2,2,0,1},{1,1,0,2,2,2,2,2,0,1},{1,1,0,0,0,0,0,0,0,1} };
         etat [position_perso[0]] [position_perso[1]] = 3;
-        etat [3][5] = 4;
-        etat [3][8] = 4;
+        //etat [3][5] = 4;
+        //etat [3][8] = 4;
         //etat [3][6] = 4;
         etat [5][5] = 6;
-        etat [4][8] = 6;
-        etat [4][6] = 6;
-        int[] position_cible = {5, 5, 4, 8, 4, 6};
+        etat [4][6] = 4;
+        etat [4][7] = 6;
+        int[] position_cible = {5, 5, 4, 7};
 
 
         GridPane grid = new GridPane();
@@ -162,9 +162,9 @@ public class Main extends Application {
         btn5.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event4) {
                 System.out.println("haut");
-                if (((etat[position_perso[0]] [position_perso[1]-2] == 2 || etat[position_perso[0]] [position_perso[1]-2] == 6) && (etat[position_perso[0]] [position_perso[1]-1] == 4)) || (etat[position_perso[0]] [position_perso[1]-1] == 2)) {
+                if (((etat[position_perso[0]] [position_perso[1]-2] == 2 || etat[position_perso[0]] [position_perso[1]-2] == 6) && (etat[position_perso[0]] [position_perso[1]-1] == 4)) || (etat[position_perso[0]] [position_perso[1]-1] == 2) || etat[position_perso[0]] [position_perso[1]-1] == 6 || etat[position_perso[0]] [position_perso[1]-1] == 5) {
                     position_perso[1]--;
-                    if (etat[position_perso[0]][position_perso[1]] == 4) {
+                    if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
                         if (etat[position_perso[0]][position_perso[1]-1] == 6){
                             etat[position_perso[0]][position_perso[1] - 1] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] - 1);
@@ -180,9 +180,20 @@ public class Main extends Application {
                         }
                     }
                     etat[position_perso[0]][position_perso[1]] = 3;
-                    etat[position_perso[0]][position_perso[1] + 1] = 2;
-                    grid.add(new ImageView(image[2]), position_perso[0], position_perso[1] + 1);
+
+                    boolean bool = false;
+
+                    if (bool == false){
+                        etat[position_perso[0]][position_perso[1]+1] = 2;
+                        grid.add(new ImageView(image[2]), position_perso[0], position_perso[1]+1);
+                    }
                     grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
+                    for(int i=0; i<position_cible.length-1; i=i+2) {
+                        if (position_cible[i] == position_perso[0] && position_cible[i + 1] == position_perso[1]+1) {
+                            etat[position_perso[0]][position_perso[1]+1] = 6;
+                            grid.add(new ImageView(image[6]), position_perso[0], position_perso[1]+1);
+                        }
+                    }
                 }
             }
         });
@@ -195,9 +206,9 @@ public class Main extends Application {
         btn6.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event4) {
                 System.out.println("bas");
-                if (((etat[position_perso[0]] [position_perso[1]+2] == 2 || etat[position_perso[0]] [position_perso[1]+2] == 6) && (etat[position_perso[0]] [position_perso[1]+1] == 4)) || (etat[position_perso[0]] [position_perso[1]+1] == 2)) {
+                if (((etat[position_perso[0]] [position_perso[1]+2] == 2 || etat[position_perso[0]] [position_perso[1]+2] == 6) && (etat[position_perso[0]] [position_perso[1]+1] == 4)) || (etat[position_perso[0]] [position_perso[1]+1] == 2) || etat[position_perso[0]] [position_perso[1]+1] == 6 || etat[position_perso[0]] [position_perso[1]+1] == 5) {
                     position_perso[1]++;
-                    if (etat[position_perso[0]][position_perso[1]] == 4) {
+                    if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
                         if (etat[position_perso[0]][position_perso[1]+1] == 6){
                             etat[position_perso[0]][position_perso[1] + 1] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] + 1);
@@ -213,9 +224,20 @@ public class Main extends Application {
                         }
                     }
                     etat[position_perso[0]][position_perso[1]] = 3;
-                    etat[position_perso[0]][position_perso[1] - 1] = 2;
-                    grid.add(new ImageView(image[2]), position_perso[0], position_perso[1] - 1);
+
+                    boolean bool = false;
+
+                    if (bool == false){
+                        etat[position_perso[0]][position_perso[1]-1] = 2;
+                        grid.add(new ImageView(image[2]), position_perso[0], position_perso[1]-1);
+                    }
                     grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
+                    for(int i=0; i<position_cible.length-1; i=i+2) {
+                        if (position_cible[i] == position_perso[0] && position_cible[i + 1] == position_perso[1]-1) {
+                            etat[position_perso[0]][position_perso[1]-1] = 6;
+                            grid.add(new ImageView(image[6]), position_perso[0], position_perso[1]-1);
+                        }
+                    }
                 }
             }
         });
