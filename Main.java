@@ -35,20 +35,23 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        int[] position_perso = {2,5};
-        int[][] etat = {{1,1,1,1,1,1,1,1,1,1},{1,0,0,0,0,0,0,0,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,2,2,2,2,2,2,0,1},{1,0,0,0,0,0,0,0,0,1},{1,1,1,1,1,1,1,1,1,1}};
+        int[] position_perso = {3,6};
+        int[][] etat = { {0,0,0,0,0,1,1,1,1,1},{0,2,2,2,0,0,0,0,0,0},{0,2,2,2,0,2,2,2,2,0},{0,2,2,2,2,2,2,2,2,0},{0,0,0,0,0,2,2,2,2,0},{1,1,1,1,0,2,0,0,0,0},{1,1,0,0,0,2,2,2,0,1},{1,1,0,2,2,2,2,2,0,1},{1,1,0,2,2,2,2,2,0,1},{1,1,0,0,0,0,0,0,0,1} };
         etat [position_perso[0]] [position_perso[1]] = 3;
-        etat [5][5] = 4;
-        etat [2][7] = 6;
+        etat [2][3] = 4;
+        etat [8][6] = 4;
+        etat [7][3] = 6;
+        etat [8][3] = 6;
+
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
 
         for (int i = 0; i < etat.length; i++){
-             for (int j = 0; j < etat[0].length; j++){
-		        grid.add(new ImageView(image[etat[i][j]]),i,j);
-		    }
-		}
+            for (int j = 0; j < etat[0].length; j++){
+                grid.add(new ImageView(image[etat[i][j]]),i,j);
+            }
+        }
 
         Button btn2 = new Button("Exit");
         grid.add(btn2, 8, 13);
@@ -72,9 +75,6 @@ public class Main extends Application {
                         if (etat[position_perso[0]-1][position_perso[1]] == 6){
                             etat[position_perso[0]-1][position_perso[1]] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0]-1, position_perso[1]);
-                            Text scenetitle = new Text("Vous avez gagné !!!");
-                            scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-                            grid.add(scenetitle, 16, 11);
                         }else{
                             etat[position_perso[0]-1][position_perso[1]] = 4;
                             grid.add(new ImageView(image[4]), position_perso[0]-1, position_perso[1]);
@@ -101,10 +101,6 @@ public class Main extends Application {
                         if (etat[position_perso[0]+1][position_perso[1]] == 6){
                             etat[position_perso[0]+1][position_perso[1]] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0]+1, position_perso[1]);
-                            Text scenetitle = new Text("Vous avez gagné !!!");
-                            scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-                            grid.add(scenetitle, 16, 11);
-                        }else{
                             etat[position_perso[0]+1][position_perso[1]] = 4;
                             grid.add(new ImageView(image[4]), position_perso[0]+1, position_perso[1]);
                         }
@@ -130,9 +126,6 @@ public class Main extends Application {
                         if (etat[position_perso[0]][position_perso[1]-1] == 6){
                             etat[position_perso[0]][position_perso[1] - 1] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] - 1);
-                            Text scenetitle = new Text("Vous avez gagné !!!");
-                            scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-                            grid.add(scenetitle, 16, 11);
                         }else{
                             etat[position_perso[0]][position_perso[1] - 1] = 4;
                             grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] - 1);
@@ -160,9 +153,6 @@ public class Main extends Application {
                         if (etat[position_perso[0]][position_perso[1]+1] == 6){
                             etat[position_perso[0]][position_perso[1] + 1] = 5;
                             grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] + 1);
-                            Text scenetitle = new Text("Vous avez gagné !!!");
-                            scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-                            grid.add(scenetitle, 16, 11);
                         }else{
                             etat[position_perso[0]][position_perso[1] + 1] = 4;
                             grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] + 1);
