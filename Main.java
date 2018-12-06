@@ -8,11 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.layout.HBox;
 import java.lang.String;
-import javafx.scene.text.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,12 +27,17 @@ public class Main extends Application {
     Image caisse_ok = new Image(new FileInputStream("src/sample/caisse ok sokoban.jpg"), 50, 50, false, false);
     Image emplacement_caisse = new Image(new FileInputStream("src/sample/emplacement caisse.jpg"), 50, 50, false, false);
 
+    Image win = new Image(new FileInputStream("src/sample/win.png"), 200, 200, false, false);
+
     Image[] image = {mur,ext,inside, perso, caisse_not_ok, caisse_ok, emplacement_caisse};
 
-    int nbcibles = 2;
+    static int nbcibles = 2;
+
+    GridPane grid = new GridPane();
 
     public Main() throws FileNotFoundException {
     }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -42,15 +47,18 @@ public class Main extends Application {
         etat [position_perso[0]] [position_perso[1]] = 3;
         //etat [3][5] = 4;
         //etat [3][8] = 4;
-        //etat [3][6] = 4;
+        etat [7][4] = 4;
         etat [5][5] = 6;
         etat [4][6] = 4;
-        etat [4][7] = 6;
-        int[] position_cible = {5, 5, 4, 7};
+        etat [7][3] = 6;
+        int[] position_cible = {5, 5, 7, 3};
 
-
-        GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
+
+        primaryStage.setScene(new Scene(grid, 960, 700));
+        primaryStage.setTitle("Sokoban");
+        primaryStage.show();
+
 
         for (int i = 0; i < etat.length; i++){
             for (int j = 0; j < etat[0].length; j++){
@@ -68,186 +76,211 @@ public class Main extends Application {
         });
 
 
-        Button btn3 = new Button("<-");
-        grid.add(btn3, 0, 12);
+        grid.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                KeyCode input = event.getCode();
+                if (input.equals(KeyCode.LEFT)){
+                    System.out.println("left");
+                    if (((etat[position_perso[0]-2] [position_perso[1]] == 2 || etat[position_perso[0]-2] [position_perso[1]] == 6) && ((etat[position_perso[0]-1] [position_perso[1]] == 4) || (etat[position_perso[0]-1] [position_perso[1]] == 5))) || (etat[position_perso[0]-1] [position_perso[1]] == 2) || etat[position_perso[0]-1] [position_perso[1]] == 6) {
+                        position_perso[0]--;
+                        if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
 
-        btn3.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event3) {
-                System.out.println("gauche");
-                if (((etat[position_perso[0]-2] [position_perso[1]] == 2 || etat[position_perso[0]-2] [position_perso[1]] == 6) && (etat[position_perso[0]-1] [position_perso[1]] == 4)) || (etat[position_perso[0]-1] [position_perso[1]] == 2) || etat[position_perso[0]-1] [position_perso[1]] == 6 || etat[position_perso[0]-1] [position_perso[1]] == 5) {
-                    position_perso[0]--;
-                    if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
-                        if (etat[position_perso[0] - 1][position_perso[1]] == 6) {
-                            etat[position_perso[0] - 1][position_perso[1]] = 5;
-                            grid.add(new ImageView(image[5]), position_perso[0] - 1, position_perso[1]);
-                            nbcibles--;
-                            if (nbcibles == 0) {
-                                Text scenetitle = new Text("Vous avez gagné !!!");
-                                scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-                                grid.add(scenetitle, 16, 11);
+                            if(etat[position_perso[0]][position_perso[1]] == 5){
+                                nbcibles++;
                             }
-                        } else {
-                            etat[position_perso[0] - 1][position_perso[1]] = 4;
-                            grid.add(new ImageView(image[4]), position_perso[0] - 1, position_perso[1]);
+
+
+                            if (etat[position_perso[0] - 1][position_perso[1]] == 6) {
+                                etat[position_perso[0] - 1][position_perso[1]] = 5;
+                                grid.add(new ImageView(image[5]), position_perso[0] - 1, position_perso[1]);
+                                nbcibles--;
+                                System.out.print(nbcibles);
+                                if (nbcibles == 0) {
+                                    grid.add(new ImageView(win), 5,0,11, 4);
+                                    grid.add(new ImageView(win), 5,6,11, 4);
+                                    grid.add(new ImageView(win), 0,0,11, 4);
+                                    grid.add(new ImageView(win), 0,6,11, 4);
+                                }
+                            }else {
+                                etat[position_perso[0] - 1][position_perso[1]] = 4;
+                                grid.add(new ImageView(image[4]), position_perso[0] - 1, position_perso[1]);
+
+                            }
+                        }
+                        etat[position_perso[0]][position_perso[1]] = 3;
+
+                        boolean bool = false;
+
+                        if (bool == false) {
+                            etat[position_perso[0] + 1][position_perso[1]] = 2;
+                            grid.add(new ImageView(image[2]), position_perso[0] + 1, position_perso[1]);
+                        }
+
+                        grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
+                        for (int i = 0; i < position_cible.length - 1; i = i + 2) {
+                            if (position_cible[i] == position_perso[0] + 1 && position_cible[i + 1] == position_perso[1]) {
+                                etat[position_perso[0] + 1][position_perso[1]] = 6;
+
+
+                                grid.add(new ImageView(image[6]), position_perso[0] + 1, position_perso[1]);
+                            }
                         }
                     }
-                    etat[position_perso[0]][position_perso[1]] = 3;
+                }else if (input.equals(KeyCode.RIGHT)){
+                    System.out.println("right");
+                    if (((etat[position_perso[0]+2] [position_perso[1]] == 2 || etat[position_perso[0]+2] [position_perso[1]] == 6) && ((etat[position_perso[0]+1] [position_perso[1]] == 4) || (etat[position_perso[0]+1] [position_perso[1]] == 5))) || (etat[position_perso[0]+1] [position_perso[1]] == 2) || etat[position_perso[0]+1] [position_perso[1]] == 6) {
+                        position_perso[0]++;
+                        if ((etat[position_perso[0]][position_perso[1]] == 4) || (etat[position_perso[0]][position_perso[1]] == 5)) {
 
-                    boolean bool = false;
+                            if(etat[position_perso[0]][position_perso[1]] == 5){
+                                nbcibles++;
+                            }
 
-                    if (bool == false) {
-                        etat[position_perso[0] + 1][position_perso[1]] = 2;
-                        grid.add(new ImageView(image[2]), position_perso[0] + 1, position_perso[1]);
+
+                            if (etat[position_perso[0]+1][position_perso[1]] == 6){
+                                etat[position_perso[0]+1][position_perso[1]] = 5;
+                                grid.add(new ImageView(image[5]), position_perso[0]+1, position_perso[1]);
+                                nbcibles--;
+                                System.out.print(nbcibles);
+                                if (nbcibles == 0){
+                                    grid.add(new ImageView(win), 5,0,11, 4);
+                                    grid.add(new ImageView(win), 5,6,11, 4);
+                                    grid.add(new ImageView(win), 0,0,11, 4);
+                                    grid.add(new ImageView(win), 0,6,11, 4);
+                                }
+                            }
+                            else{
+                                etat[position_perso[0]+1][position_perso[1]] = 4;
+                                grid.add(new ImageView(image[4]), position_perso[0]+1, position_perso[1]);
+
+                            }
+                        }
+                        etat[position_perso[0]][position_perso[1]] = 3;
+
+                        boolean bool = false;
+
+                        if (bool == false){
+                            etat[position_perso[0] - 1][position_perso[1]] = 2;
+                            grid.add(new ImageView(image[2]), position_perso[0] - 1, position_perso[1]);
+                        }
+
+                        grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
+                        for(int i=0; i<position_cible.length-1; i=i+2) {
+                            if (position_cible[i] == position_perso[0] - 1 && position_cible[i + 1] == position_perso[1]) {
+                                etat[position_perso[0] - 1][position_perso[1]] = 6;
+
+
+                                grid.add(new ImageView(image[6]), position_perso[0] - 1, position_perso[1]);
+                            }
+                        }
+                    }
+                }else if (input.equals(KeyCode.UP)){
+                    System.out.println("up");
+                    if (((etat[position_perso[0]] [position_perso[1]-2] == 2 || etat[position_perso[0]] [position_perso[1]-2] == 6) && ((etat[position_perso[0]] [position_perso[1]-1] == 4) || (etat[position_perso[0]] [position_perso[1]-1] == 5))) || (etat[position_perso[0]] [position_perso[1]-1] == 2) || etat[position_perso[0]] [position_perso[1]-1] == 6) {
+                        position_perso[1]--;
+                        if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
+
+                            if(etat[position_perso[0]][position_perso[1]] == 5){
+                                nbcibles++;
+                            }
+
+
+                            if (etat[position_perso[0]][position_perso[1]-1] == 6){
+                                etat[position_perso[0]][position_perso[1] - 1] = 5;
+                                grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] - 1);
+                                nbcibles--;
+                                System.out.print(nbcibles);
+                                if (nbcibles == 0){
+                                    grid.add(new ImageView(win), 5,0,11, 4);
+                                    grid.add(new ImageView(win), 5,6,11, 4);
+                                    grid.add(new ImageView(win), 0,0,11, 4);
+                                    grid.add(new ImageView(win), 0,6,11, 4);
+                                }
+                            }
+                            else{
+                                etat[position_perso[0]][position_perso[1] - 1] = 4;
+                                grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] - 1);
+
+                            }
+                        }
+                        etat[position_perso[0]][position_perso[1]] = 3;
+
+                        boolean bool = false;
+
+                        if (bool == false){
+                            etat[position_perso[0]][position_perso[1]+1] = 2;
+                            grid.add(new ImageView(image[2]), position_perso[0], position_perso[1]+1);
+                        }
+                        grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
+                        for(int i=0; i<position_cible.length-1; i=i+2) {
+                            if (position_cible[i] == position_perso[0] && position_cible[i + 1] == position_perso[1]+1) {
+                                etat[position_perso[0]][position_perso[1]+1] = 6;
+
+                                nbcibles ++;
+                                System.out.print(nbcibles);
+
+                                grid.add(new ImageView(image[6]), position_perso[0], position_perso[1]+1);
+                            }
+                        }
                     }
 
-                    grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
-                    for (int i = 0; i < position_cible.length - 1; i = i + 2) {
-                        if (position_cible[i] == position_perso[0] + 1 && position_cible[i + 1] == position_perso[1]) {
-                            etat[position_perso[0] + 1][position_perso[1]] = 6;
-                            grid.add(new ImageView(image[6]), position_perso[0] + 1, position_perso[1]);
+                }else if (input.equals(KeyCode.DOWN)){
+                    System.out.println("down");
+                    if (((etat[position_perso[0]] [position_perso[1]+2] == 2 || etat[position_perso[0]] [position_perso[1]+2] == 6) && ((etat[position_perso[0]] [position_perso[1]+1] == 4) || (etat[position_perso[0]] [position_perso[1]+1] == 5))) || (etat[position_perso[0]] [position_perso[1]+1] == 2) || etat[position_perso[0]] [position_perso[1]+1] == 6) {
+                        position_perso[1]++;
+                        if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
+
+
+                            if(etat[position_perso[0]][position_perso[1]] == 5){
+                                nbcibles++;
+                            }
+
+
+                            if (etat[position_perso[0]][position_perso[1]+1] == 6){
+                                etat[position_perso[0]][position_perso[1] + 1] = 5;
+                                grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] + 1);
+                                nbcibles--;
+                                System.out.print(nbcibles);
+                                if (nbcibles == 0){
+                                    grid.add(new ImageView(win), 5,0,11, 4);
+                                    grid.add(new ImageView(win), 5,6,11, 4);
+                                    grid.add(new ImageView(win), 0,0,11, 4);
+                                    grid.add(new ImageView(win), 0,6,11, 4);
+                                }
+                            }
+                            else{
+                                etat[position_perso[0]][position_perso[1] + 1] = 4;
+                                grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] + 1);
+
+                            }
+                        }
+                        etat[position_perso[0]][position_perso[1]] = 3;
+
+                        boolean bool = false;
+
+                        if (bool == false){
+                            etat[position_perso[0]][position_perso[1]-1] = 2;
+                            grid.add(new ImageView(image[2]), position_perso[0], position_perso[1]-1);
+                        }
+                        grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
+                        for(int i=0; i<position_cible.length-1; i=i+2) {
+                            if (position_cible[i] == position_perso[0] && position_cible[i + 1] == position_perso[1]-1) {
+                                etat[position_perso[0]][position_perso[1]-1] = 6;
+
+
+                                grid.add(new ImageView(image[6]), position_perso[0], position_perso[1]-1);
+                            }
                         }
                     }
                 }
             }
         });
 
+        grid.requestFocus();
 
-        Button btn4 = new Button("->");
-        grid.add(btn4, 2, 12);
-
-        btn4.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event4) {
-                System.out.println("droite");
-                if (((etat[position_perso[0]+2] [position_perso[1]] == 2 || etat[position_perso[0]+2] [position_perso[1]] == 6) && (etat[position_perso[0]+1] [position_perso[1]] == 4)) || (etat[position_perso[0]+1] [position_perso[1]] == 2) || etat[position_perso[0]+1] [position_perso[1]] == 6 || etat[position_perso[0]+1] [position_perso[1]] == 5) {
-                    position_perso[0]++;
-                    if ((etat[position_perso[0]][position_perso[1]] == 4) || (etat[position_perso[0]][position_perso[1]] == 5)) {
-                        if (etat[position_perso[0]+1][position_perso[1]] == 6){
-                            etat[position_perso[0]+1][position_perso[1]] = 5;
-                            grid.add(new ImageView(image[5]), position_perso[0]+1, position_perso[1]);
-                            nbcibles--;
-                            if (nbcibles == 0){
-                                Text scenetitle = new Text("Vous avez gagné !!!");
-                                scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-                                grid.add(scenetitle, 16, 11);
-                            }
-                        }else{
-                            etat[position_perso[0]+1][position_perso[1]] = 4;
-                            grid.add(new ImageView(image[4]), position_perso[0]+1, position_perso[1]);
-                        }
-                    }
-                    etat[position_perso[0]][position_perso[1]] = 3;
-
-                    boolean bool = false;
-
-                    if (bool == false){
-                        etat[position_perso[0] - 1][position_perso[1]] = 2;
-                        grid.add(new ImageView(image[2]), position_perso[0] - 1, position_perso[1]);
-                    }
-
-                    grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
-                    for(int i=0; i<position_cible.length-1; i=i+2) {
-                        if (position_cible[i] == position_perso[0] - 1 && position_cible[i + 1] == position_perso[1]) {
-                            etat[position_perso[0] - 1][position_perso[1]] = 6;
-                            grid.add(new ImageView(image[6]), position_perso[0] - 1, position_perso[1]);
-                        }
-                    }
-                }
-            }
-        });
-
-
-        Button btn5 = new Button("^\n|");
-        grid.add(btn5, 1, 11);
-
-        btn5.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event4) {
-                System.out.println("haut");
-                if (((etat[position_perso[0]] [position_perso[1]-2] == 2 || etat[position_perso[0]] [position_perso[1]-2] == 6) && (etat[position_perso[0]] [position_perso[1]-1] == 4)) || (etat[position_perso[0]] [position_perso[1]-1] == 2) || etat[position_perso[0]] [position_perso[1]-1] == 6 || etat[position_perso[0]] [position_perso[1]-1] == 5) {
-                    position_perso[1]--;
-                    if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
-                        if (etat[position_perso[0]][position_perso[1]-1] == 6){
-                            etat[position_perso[0]][position_perso[1] - 1] = 5;
-                            grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] - 1);
-                            nbcibles--;
-                            if (nbcibles == 0){
-                                Text scenetitle = new Text("Vous avez gagné !!!");
-                                scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-                                grid.add(scenetitle, 16, 11);
-                            }
-                        }else{
-                            etat[position_perso[0]][position_perso[1] - 1] = 4;
-                            grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] - 1);
-                        }
-                    }
-                    etat[position_perso[0]][position_perso[1]] = 3;
-
-                    boolean bool = false;
-
-                    if (bool == false){
-                        etat[position_perso[0]][position_perso[1]+1] = 2;
-                        grid.add(new ImageView(image[2]), position_perso[0], position_perso[1]+1);
-                    }
-                    grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
-                    for(int i=0; i<position_cible.length-1; i=i+2) {
-                        if (position_cible[i] == position_perso[0] && position_cible[i + 1] == position_perso[1]+1) {
-                            etat[position_perso[0]][position_perso[1]+1] = 6;
-                            grid.add(new ImageView(image[6]), position_perso[0], position_perso[1]+1);
-                        }
-                    }
-                }
-            }
-        });
-
-
-        Button btn6 = new Button(" |\n\\/");
-        grid.add(btn6, 1, 13);
-
-
-        btn6.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event4) {
-                System.out.println("bas");
-                if (((etat[position_perso[0]] [position_perso[1]+2] == 2 || etat[position_perso[0]] [position_perso[1]+2] == 6) && (etat[position_perso[0]] [position_perso[1]+1] == 4)) || (etat[position_perso[0]] [position_perso[1]+1] == 2) || etat[position_perso[0]] [position_perso[1]+1] == 6 || etat[position_perso[0]] [position_perso[1]+1] == 5) {
-                    position_perso[1]++;
-                    if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
-                        if (etat[position_perso[0]][position_perso[1]+1] == 6){
-                            etat[position_perso[0]][position_perso[1] + 1] = 5;
-                            grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] + 1);
-                            nbcibles--;
-                            if (nbcibles == 0){
-                                Text scenetitle = new Text("Vous avez gagné !!!");
-                                scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-                                grid.add(scenetitle, 16, 11);
-                            }
-                        }else{
-                            etat[position_perso[0]][position_perso[1] + 1] = 4;
-                            grid.add(new ImageView(image[4]), position_perso[0], position_perso[1] + 1);
-                        }
-                    }
-                    etat[position_perso[0]][position_perso[1]] = 3;
-
-                    boolean bool = false;
-
-                    if (bool == false){
-                        etat[position_perso[0]][position_perso[1]-1] = 2;
-                        grid.add(new ImageView(image[2]), position_perso[0], position_perso[1]-1);
-                    }
-                    grid.add(new ImageView(image[3]), position_perso[0], position_perso[1]);
-                    for(int i=0; i<position_cible.length-1; i=i+2) {
-                        if (position_cible[i] == position_perso[0] && position_cible[i + 1] == position_perso[1]-1) {
-                            etat[position_perso[0]][position_perso[1]-1] = 6;
-                            grid.add(new ImageView(image[6]), position_perso[0], position_perso[1]-1);
-                        }
-                    }
-                }
-            }
-        });
-
-
-
-        primaryStage.setScene(new Scene(grid, 960, 700));
-        primaryStage.setTitle("Sokoban");
-        primaryStage.show();
     }
+
 
 
     public static void main(String[] args) {
