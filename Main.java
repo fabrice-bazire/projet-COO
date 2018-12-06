@@ -12,6 +12,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+
+import javax.lang.model.type.NullType;
 import java.lang.String;
 
 import java.io.FileInputStream;
@@ -79,9 +81,16 @@ public class Main extends Application {
         grid.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                if (nbcibles == 0){
+                    try{
+                        Thread.sleep(4 * 1000);
+                        primaryStage.close();
+                    } catch (InterruptedException e) {
+                        System.out.println("erreur du programme : " + e.getMessage());
+                    }
+                }
                 KeyCode input = event.getCode();
                 if (input.equals(KeyCode.LEFT)){
-                    System.out.println("left");
                     if (((etat[position_perso[0]-2] [position_perso[1]] == 2 || etat[position_perso[0]-2] [position_perso[1]] == 6) && ((etat[position_perso[0]-1] [position_perso[1]] == 4) || (etat[position_perso[0]-1] [position_perso[1]] == 5))) || (etat[position_perso[0]-1] [position_perso[1]] == 2) || etat[position_perso[0]-1] [position_perso[1]] == 6) {
                         position_perso[0]--;
                         if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
@@ -95,7 +104,7 @@ public class Main extends Application {
                                 etat[position_perso[0] - 1][position_perso[1]] = 5;
                                 grid.add(new ImageView(image[5]), position_perso[0] - 1, position_perso[1]);
                                 nbcibles--;
-                                System.out.print(nbcibles);
+                                System.out.println(nbcibles);
                                 if (nbcibles == 0) {
                                     grid.add(new ImageView(win), 5,0,11, 4);
                                     grid.add(new ImageView(win), 5,6,11, 4);
@@ -128,7 +137,6 @@ public class Main extends Application {
                         }
                     }
                 }else if (input.equals(KeyCode.RIGHT)){
-                    System.out.println("right");
                     if (((etat[position_perso[0]+2] [position_perso[1]] == 2 || etat[position_perso[0]+2] [position_perso[1]] == 6) && ((etat[position_perso[0]+1] [position_perso[1]] == 4) || (etat[position_perso[0]+1] [position_perso[1]] == 5))) || (etat[position_perso[0]+1] [position_perso[1]] == 2) || etat[position_perso[0]+1] [position_perso[1]] == 6) {
                         position_perso[0]++;
                         if ((etat[position_perso[0]][position_perso[1]] == 4) || (etat[position_perso[0]][position_perso[1]] == 5)) {
@@ -142,7 +150,7 @@ public class Main extends Application {
                                 etat[position_perso[0]+1][position_perso[1]] = 5;
                                 grid.add(new ImageView(image[5]), position_perso[0]+1, position_perso[1]);
                                 nbcibles--;
-                                System.out.print(nbcibles);
+                                System.out.println(nbcibles);
                                 if (nbcibles == 0){
                                     grid.add(new ImageView(win), 5,0,11, 4);
                                     grid.add(new ImageView(win), 5,6,11, 4);
@@ -176,7 +184,6 @@ public class Main extends Application {
                         }
                     }
                 }else if (input.equals(KeyCode.UP)){
-                    System.out.println("up");
                     if (((etat[position_perso[0]] [position_perso[1]-2] == 2 || etat[position_perso[0]] [position_perso[1]-2] == 6) && ((etat[position_perso[0]] [position_perso[1]-1] == 4) || (etat[position_perso[0]] [position_perso[1]-1] == 5))) || (etat[position_perso[0]] [position_perso[1]-1] == 2) || etat[position_perso[0]] [position_perso[1]-1] == 6) {
                         position_perso[1]--;
                         if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
@@ -190,7 +197,7 @@ public class Main extends Application {
                                 etat[position_perso[0]][position_perso[1] - 1] = 5;
                                 grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] - 1);
                                 nbcibles--;
-                                System.out.print(nbcibles);
+                                System.out.println(nbcibles);
                                 if (nbcibles == 0){
                                     grid.add(new ImageView(win), 5,0,11, 4);
                                     grid.add(new ImageView(win), 5,6,11, 4);
@@ -226,7 +233,6 @@ public class Main extends Application {
                     }
 
                 }else if (input.equals(KeyCode.DOWN)){
-                    System.out.println("down");
                     if (((etat[position_perso[0]] [position_perso[1]+2] == 2 || etat[position_perso[0]] [position_perso[1]+2] == 6) && ((etat[position_perso[0]] [position_perso[1]+1] == 4) || (etat[position_perso[0]] [position_perso[1]+1] == 5))) || (etat[position_perso[0]] [position_perso[1]+1] == 2) || etat[position_perso[0]] [position_perso[1]+1] == 6) {
                         position_perso[1]++;
                         if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
@@ -241,7 +247,7 @@ public class Main extends Application {
                                 etat[position_perso[0]][position_perso[1] + 1] = 5;
                                 grid.add(new ImageView(image[5]), position_perso[0], position_perso[1] + 1);
                                 nbcibles--;
-                                System.out.print(nbcibles);
+                                System.out.println(nbcibles);
                                 if (nbcibles == 0){
                                     grid.add(new ImageView(win), 5,0,11, 4);
                                     grid.add(new ImageView(win), 5,6,11, 4);
