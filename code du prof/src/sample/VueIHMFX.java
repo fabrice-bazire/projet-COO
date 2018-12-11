@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.io.FileInputStream;
@@ -9,7 +10,7 @@ import java.io.FileNotFoundException;
 public class VueIHMFX {
 
     CommandeTabInt commandeGetEtat;
-    GridPane gridPane = new GridPane();
+    public GridPane grid = new GridPane();
 
     /*
         0: interieur
@@ -21,31 +22,42 @@ public class VueIHMFX {
 
         A faire
      */
-    enum Images {
+
+
+    Image mur = (new Image(new FileInputStream("src/sample/mur sokoban.jpg"), 50, 50, false, false));
+    Image exterieur = ( new Image(new FileInputStream("src/sample/exterieur sokoban.jpg"), 50,50,false,false));
+
+
+   private enum Images {
         //Objets directement construits
-        MUR(new Image(new FileInputStream("src/sample/mur sokoban.jpg"), 50, 50, false, false)),
 
-        EXTERIEUR ( new Image(new FileInputStream("src/sample/exterieur sokoban.jpg"), 50,50,false,false)),
+        MUR("src/sample/mur sokoban.jpg"),
 
-        INTERIEUR( new Image(new FileInputStream("src/sample/interieur sokoban.jpg"), 50,50,false,false)),
+        EXTERIEUR ("src/sample/exterieur sokoban.jpg"),
 
-        PERSONNAGE( new Image(new FileInputStream("src/sample/fab.jpg"), 50,50,false,false)),
+        INTERIEUR("src/sample/interieur sokoban.jpg"),
 
-        CAISSE_NOT_OK( new Image(new FileInputStream("src/sample/caisse not ok sokoban.jpg"), 50,50,false,false)),
+        PERSONNAGE( "src/sample/fab.jpg"),
 
-        CAISSE_OK(new Image(new FileInputStream("src/sample/caisse ok sokoban.jpg"), 50,50,false,false)),
+        CAISSE_NOT_OK( "src/sample/caisse not ok sokoban.jpg"),
 
-        CIBLE(new Image(new FileInputStream("src/sample/emplacement caisse.jpg"), 50,50,false,false));
+        CAISSE_OK("src/sample/caisse ok sokoban.jpg"),
 
-        private Images image;
+        CIBLE("src/sample/emplacement caisse.jpg");
+
+        private Image image;
 
         //Constructeur
-        Images(Images image){
-            this.image = image;
+        private Images(String name){
+            try {
+                this.image = new Image(new FileInputStream(name), 50,50,false,false);
+            } catch (FileNotFoundException e) {
+                System.out.print(e.getMessage());
+            }
         }
 
-        public Images getImage(){
-            return image;
+        public Image getImage(){
+            return this.image;
         }
     }
 
@@ -58,7 +70,9 @@ public class VueIHMFX {
     public void dessine() {
         int[][] etat = commandeGetEtat.exec();
 
-        Image image;
+        Image image = null;
+
+        grid.getChildren().remove(0, grid.getChildren().size());
 
         for (int x = 0; x < etat.length; x++){
             for (int y = 0; y < etat[x].length; y++){
@@ -84,13 +98,10 @@ public class VueIHMFX {
                     case 6:
                         image = Images.CIBLE.getImage();
                         break;
-
-                }
-                gridPane.add(image, x, y);
+                    }
+                grid.add(new ImageView(image), x, y);
             }
 
         }
-        
-        //gridPane.add(new ImageView(chameau[0]),0,0);
     }
 }

@@ -25,13 +25,13 @@ public class IHMFX extends Application implements Observateur {
 
         vue = new VueIHMFX(controleur);
         ControleurIHMFX controleurIHMFX = new ControleurIHMFX(controleur,vue);
-        vue.gridPane.setAlignment(Pos.CENTER);
+        vue.grid.setAlignment(Pos.CENTER);
 
         /* montage de la scene */
         MonteurScene monteurScene = new MonteurScene();
 
         Scene scene = monteurScene.
-                setCentre(vue.gridPane).
+                setCentre(vue.grid).
 //                setLargeur(800).
 //                setHauteur(200).
                 retourneScene();
@@ -40,6 +40,9 @@ public class IHMFX extends Application implements Observateur {
 
         primaryStage.setTitle("Sokoban");
         primaryStage.show();
+
+        vue.grid.requestFocus();
+
     }
 
     public void lance() {
