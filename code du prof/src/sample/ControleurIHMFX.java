@@ -16,11 +16,20 @@ public class ControleurIHMFX {
         this.vue = vue;
     }
 
-
     class MyAction implements EventHandler<KeyEvent> {
         @Override
         public void handle(KeyEvent event) {
+            KeyCode input = event.getCode();
 
+            if (input.equals(KeyCode.LEFT)){
+                controleur.move(-1, 0);
+            }else if (input.equals(KeyCode.RIGHT)){
+                controleur.move(1, 0);
+            }else if (input.equals(KeyCode.UP)){
+                controleur.move(0, -1);
+            }else if (input.equals(KeyCode.DOWN)){
+                controleur.move(0, 1);
+            }
         }
     }
 }

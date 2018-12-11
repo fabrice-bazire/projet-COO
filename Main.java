@@ -106,33 +106,33 @@ public class Main extends Application {
 
     public void move (int x, int y){
         if (((etat[position_perso[0]+(x*2)] [position_perso[1]+(y*2)] == 2 || etat[position_perso[0]+(x*2)] [position_perso[1]+(y*2)] == 6) && ((etat[position_perso[0]+x] [position_perso[1]+y] == 4) || (etat[position_perso[0]+x] [position_perso[1]+y] == 5))) || (etat[position_perso[0]+x] [position_perso[1]+y] == 2) || etat[position_perso[0]+x] [position_perso[1]+y] == 6) {
-            position_perso[0] += x;
-            position_perso[1] += y;
-            if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
+                position_perso[0] += x;
+                position_perso[1] += y;
+                if (etat[position_perso[0]][position_perso[1]] == 4 || (etat[position_perso[0]][position_perso[1]] == 5)) {
 
-                if(etat[position_perso[0]][position_perso[1]] == 5){
-                    nbcibles++;
-                }
+                    if(etat[position_perso[0]][position_perso[1]] == 5){
+                        nbcibles++;
+                    }
 
 
-                if (etat[position_perso[0]+x][position_perso[1]+y] == 6){
-                    etat[position_perso[0]+x][position_perso[1]+y] = 5;
-                    grid.add(new ImageView(image[5]), position_perso[0]+x, position_perso[1]+y);
-                    nbcibles--;
-                    System.out.println(nbcibles);
-                    if (nbcibles == 0){
-                        grid.add(new ImageView(win), 5,0,11, 4);
-                        grid.add(new ImageView(win), 5,6,11, 4);
-                        grid.add(new ImageView(win), 0,0,11, 4);
-                        grid.add(new ImageView(win), 0,6,11, 4);
+                    if (etat[position_perso[0]+x][position_perso[1]+y] == 6){
+                        etat[position_perso[0]+x][position_perso[1]+y] = 5;
+                        grid.add(new ImageView(image[5]), position_perso[0]+x, position_perso[1]+y);
+                        nbcibles--;
+                        System.out.println(nbcibles);
+                        if (nbcibles == 0){
+                            grid.add(new ImageView(win), 5,0,11, 4);
+                            grid.add(new ImageView(win), 5,6,11, 4);
+                            grid.add(new ImageView(win), 0,0,11, 4);
+                            grid.add(new ImageView(win), 0,6,11, 4);
+                        }
+                    }
+                    else{
+                        etat[position_perso[0]+x][position_perso[1]+y] = 4;
+                        grid.add(new ImageView(image[4]), position_perso[0]+x, position_perso[1]+y);
+
                     }
                 }
-                else{
-                    etat[position_perso[0]+x][position_perso[1]+y] = 4;
-                    grid.add(new ImageView(image[4]), position_perso[0]+x, position_perso[1]+y);
-
-                }
-            }
             etat[position_perso[0]][position_perso[1]] = 3;
 
             boolean bool = false;
