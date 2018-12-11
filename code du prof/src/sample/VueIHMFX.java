@@ -1,8 +1,6 @@
 package sample;
 
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.io.FileInputStream;
@@ -25,25 +23,28 @@ public class VueIHMFX {
      */
     enum Images {
         //Objets directement construits
-        MUR ( new Image(new FileInputStream("src/sample/mur sokoban.jpg"),50,50,false,false) );
-        EXTERIEUR ( new Image(new FileInputStream("src/sample/exterieur sokoban.jpg"), 50, 50, false, false) );
-        INTERIEUR ( new Image(new FileInputStream("src/sample/interieur sokoban.jpg"), 50, 50, false, false) );
-        PERSONNAGE ( new Image(new FileInputStream("src/sample/fab.jpg"), 50, 50, false, false) );
-        CAISSE_NOT_OK ( new Image(new FileInputStream("src/sample/caisse not ok sokoban.jpg"), 50, 50, false, false) );
-        CAISSE_OK (new Image(new FileInputStream("src/sample/caisse ok sokoban.jpg"), 50, 50, false, false) );
-        CIBLE (new Image(new FileInputStream("src/sample/emplacement caisse.jpg"), 50, 50, false, false) );
+        MUR(new Image(new FileInputStream("src/sample/mur sokoban.jpg"), 50, 50, false, false)),
 
+        EXTERIEUR ( new Image(new FileInputStream("src/sample/exterieur sokoban.jpg"), 50,50,false,false)),
 
+        INTERIEUR( new Image(new FileInputStream("src/sample/interieur sokoban.jpg"), 50,50,false,false)),
 
+        PERSONNAGE( new Image(new FileInputStream("src/sample/fab.jpg"), 50,50,false,false)),
 
-        private Image image;
+        CAISSE_NOT_OK( new Image(new FileInputStream("src/sample/caisse not ok sokoban.jpg"), 50,50,false,false)),
+
+        CAISSE_OK(new Image(new FileInputStream("src/sample/caisse ok sokoban.jpg"), 50,50,false,false)),
+
+        CIBLE(new Image(new FileInputStream("src/sample/emplacement caisse.jpg"), 50,50,false,false));
+
+        private Images image;
 
         //Constructeur
-        Images(Image image){
+        Images(Images image){
             this.image = image;
         }
 
-        public Image getImage(){
+        public Images getImage(){
             return image;
         }
     }

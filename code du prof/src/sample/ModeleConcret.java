@@ -3,9 +3,13 @@ package sample;
 public class ModeleConcret implements Modele {
     public int[][] etat = {{0}};
 
+    public int [] position_perso = {0};
+
     public int[][] getEtat() {
         return etat;
     }
+
+
 
     public void move (int x, int y){
         if (((etat[position_perso[0]+(x*2)] [position_perso[1]+(y*2)] == 2 || etat[position_perso[0]+(x*2)] [position_perso[1]+(y*2)] == 6) && ((etat[position_perso[0]+x] [position_perso[1]+y] == 4) || (etat[position_perso[0]+x] [position_perso[1]+y] == 5))) || (etat[position_perso[0]+x] [position_perso[1]+y] == 2) || etat[position_perso[0]+x] [position_perso[1]+y] == 6) {
