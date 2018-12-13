@@ -69,6 +69,7 @@ public class VueIHMFX {
 
     public void dessine() {
         int[][] etat = commandeGetEtat.exec();
+        //test
 
         Image image = null;
 
