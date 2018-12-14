@@ -24,10 +24,6 @@ public class VueIHMFX {
      */
 
 
-    Image mur = (new Image(new FileInputStream("src/sample/mur sokoban.jpg"), 50, 50, false, false));
-    Image exterieur = ( new Image(new FileInputStream("src/sample/exterieur sokoban.jpg"), 50,50,false,false));
-
-
    private enum Images {
         //Objets directement construits
 

@@ -32,7 +32,7 @@ public class ModeleConcret implements Modele {
         position_cible = pos_cibles(etat, nb_cibles);
     }
 
-    private int[] personnage (int [][]tab){
+    public  int[] personnage(int[][] tab){
         for (int i = 0; i < tab.length; i++){
             for (int j = 0; j < tab[0].length; j++){
                 if (tab[i][j] == 3){
@@ -43,7 +43,7 @@ public class ModeleConcret implements Modele {
         return null;
     }
 
-    private int nombre_cibles (int [][] tab){
+    public  int nombre_cibles(int[][] tab){
         int n = 0;
         for (int i = 0; i < tab.length; i++){
             for (int j = 0; j < tab[0].length; j++){
@@ -55,7 +55,7 @@ public class ModeleConcret implements Modele {
         return n;
     }
 
-    private int[] pos_cibles (int [][]tab, int nb_cibles){
+    public int[] pos_cibles (int [][]tab, int nb_cibles){
         int k = 0;
         System.out.println("nb_cibles : " + nb_cibles);
         int [] cibles = new int [nb_cibles*2];
@@ -117,10 +117,20 @@ public class ModeleConcret implements Modele {
         }
 
 
-
+        //System.out.println("gagné ?\n" + win(pos_cibles(etat, nombre_cibles(etat)), etat));
 
         return false; //a modifier
     }
+
+
+    /*public boolean win (int [] pos_cibles, int [][] grille){
+        for (int i = 0; i < pos_cibles.length; i = i+2){
+            if (grille[pos_cibles[i]][pos_cibles[i+1]] != 5){
+                return false;
+            }
+        }
+        return true;
+    }*/
 
     @Override
     public void reset(int[][] tab) {
