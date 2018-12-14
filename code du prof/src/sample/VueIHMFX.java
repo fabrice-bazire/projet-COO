@@ -98,6 +98,8 @@ public class VueIHMFX {
                     case 6:
                         image = Images.CIBLE.getImage();
                         break;
+                    case 9:
+                        image = Images.PERSONNAGE.getImage();
                     }
                 grid.add(new ImageView(image), x, y);
             }

@@ -8,7 +8,7 @@ public class FacadeModele {
     }
 
     public void reset() {
-        modele.reset();
+        modele.reset(ModeleLectFichier.lecture_fichier_xsb("src/sample/test.xsb"));
     }
 
     public int[][] getEtat() {

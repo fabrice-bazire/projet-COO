@@ -24,14 +24,6 @@ public class ControleurIHMFX {
 
         @Override
         public void handle(KeyEvent event) {
-            /*if (nbcibles == 0){
-                try{
-                    Thread.sleep(2 * 1000);
-                    primaryStage.close();
-                } catch (InterruptedException e) {
-                    System.out.println("erreur du programme : " + e.getMessage());
-                }
-            }*/
             KeyCode input = event.getCode();
             if (input.equals(KeyCode.LEFT)){
                 Controleur.getControleur().move(-1, 0);
